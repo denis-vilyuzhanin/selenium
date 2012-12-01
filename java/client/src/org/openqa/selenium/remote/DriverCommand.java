@@ -161,4 +161,6 @@ public interface DriverCommand {
   String GET_AVAILABLE_LOG_TYPES = "getAvailableLogTypes";
   String GET_LOG = "getLog";
   String GET_SESSION_LOGS = "getSessionLogs";
+  
+  String ECHO = "echo";
 }

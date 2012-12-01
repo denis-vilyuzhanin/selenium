@@ -18,10 +18,12 @@ limitations under the License.
 package org.openqa.selenium.ie;
 
 import com.google.common.base.Throwables;
+import com.google.common.collect.ImmutableMap;
 
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
+import org.openqa.selenium.SendsEcho;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.browserlaunchers.WindowsProxyManager;
@@ -29,11 +31,12 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.DriverCommand;
 import org.openqa.selenium.remote.FileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.Response;
 import org.openqa.selenium.remote.service.DriverCommandExecutor;
 
 import static org.openqa.selenium.remote.CapabilityType.PROXY;
 
-public class InternetExplorerDriver extends RemoteWebDriver implements TakesScreenshot {
+public class InternetExplorerDriver extends RemoteWebDriver implements TakesScreenshot, SendsEcho {
 
   /**
    * Setting this capability will make your tests unstable and hard to debug.
@@ -96,6 +99,14 @@ public class InternetExplorerDriver extends RemoteWebDriver implements TakesScre
           String.format(
               "You appear to be running %s. The IE driver only runs on Windows.", current));
     }
+  }
+  
+
+  @Override
+  public Integer echo(int sequence) {
+  	Response response = 
+  			execute(DriverCommand.ECHO, ImmutableMap.<String, Integer>of("sequence", sequence));
+  	return response.getValue() == null ? null : Integer.parseInt(response.getValue().toString());
   }
 
   private void setup(Capabilities capabilities, int port) {
