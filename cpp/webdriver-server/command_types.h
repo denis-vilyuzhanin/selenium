@@ -103,7 +103,8 @@ enum CommandType {
   TouchScroll,
   TouchDoubleClick,
   TouchLongClick,
-  TouchFlick
+  TouchFlick,
+  Echo
 };
 
 }  // namespace webdriver
