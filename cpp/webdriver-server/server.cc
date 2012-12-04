@@ -689,7 +689,7 @@ void Server::PopulateCommandRepository() {
   this->commands_["/session/:sessionId/touch/longclick"]["POST"] = TouchLongClick;
   this->commands_["/session/:sessionId/touch/flick"]["POST"] = TouchFlick;
   
-  this->commands_["/session/:sessionid/echo"]["GET"] = Echo;
+  this->commands_["/session/:sessionid/echo"]["POST"] = Echo;
 }
 
 }  // namespace webdriver

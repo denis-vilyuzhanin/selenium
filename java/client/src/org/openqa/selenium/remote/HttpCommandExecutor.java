@@ -262,7 +262,7 @@ public class HttpCommandExecutor implements CommandExecutor, NeedsLocalLogs {
 
         .put(STATUS, get("/status"))
         
-        .put(ECHO, get("/echo"))
+        .put(ECHO, post("/session/:sessionId/echo"))
         .build();
   }
 

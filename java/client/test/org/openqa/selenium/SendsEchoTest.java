@@ -12,8 +12,8 @@ public class SendsEchoTest extends JUnit4TestBase {
 
 	@Test
 	public void echo() {
-		final int NUMBER = 125;
-		int actualNumber = ((SendsEcho)driver).echo(NUMBER);
-		assertEquals(NUMBER, actualNumber);
+		final String MESSAGE = "Hello";
+		String echoMessage = ((SendsEcho)driver).echo(MESSAGE);
+		assertEquals(MESSAGE, echoMessage);
 	}
 }

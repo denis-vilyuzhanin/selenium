@@ -103,10 +103,10 @@ public class InternetExplorerDriver extends RemoteWebDriver implements TakesScre
   
 
   @Override
-  public Integer echo(int sequence) {
+  public String echo(String message) {
   	Response response = 
-  			execute(DriverCommand.ECHO, ImmutableMap.<String, Integer>of("sequence", sequence));
-  	return response.getValue() == null ? null : Integer.parseInt(response.getValue().toString());
+  			execute(DriverCommand.ECHO, ImmutableMap.<String, String>of("message", message));
+  	return response.getValue().toString();
   }
 
   private void setup(Capabilities capabilities, int port) {

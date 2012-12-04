@@ -33,7 +33,14 @@ class EchoHandler : public IECommandHandler {
                        const LocatorMap& locator_parameters,
                        const ParametersMap& command_parameters,
                        Response* response) {
-    response->SetSuccessResponse("Hello World");
+	ParametersMap::const_iterator message_parameter_iterator = command_parameters.find("message");
+	if (message_parameter_iterator == command_parameters.end()) {
+		response->SetErrorResponse(400, "Missing parameter: message");
+		return;
+    } else {
+		std::string message = message_parameter_iterator->second.asString();
+		response->SetSuccessResponse(message);
+	}
   }
 };
 
