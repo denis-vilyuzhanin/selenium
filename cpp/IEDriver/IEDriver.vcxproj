@@ -249,6 +249,7 @@
     <ClInclude Include="BrowserFactory.h" />
     <ClInclude Include="CommandHandlers\GetWindowPositionCommandHandler.h" />
     <ClInclude Include="CommandHandlers\GetWindowSizeCommandHandler.h" />
+    <ClInclude Include="CommandHandlers\JsonRequestResponseHandler.h" />
     <ClInclude Include="CommandHandlers\MaximizeWindowCommandHandler.h" />
     <ClInclude Include="CommandHandlers\SendKeysToActiveElementCommandHandler.h" />
     <ClInclude Include="CommandHandlers\SetTimeoutCommandHandler.h" />
