@@ -250,6 +250,7 @@
     <ClInclude Include="CommandHandlers\GetWindowPositionCommandHandler.h" />
     <ClInclude Include="CommandHandlers\GetWindowSizeCommandHandler.h" />
     <ClInclude Include="CommandHandlers\MaximizeWindowCommandHandler.h" />
+    <ClInclude Include="CommandHandlers\PageStateHandler.h" />
     <ClInclude Include="CommandHandlers\SendKeysToActiveElementCommandHandler.h" />
     <ClInclude Include="CommandHandlers\SetTimeoutCommandHandler.h" />
     <ClInclude Include="CommandHandlers\SetWindowPositionCommandHandler.h" />

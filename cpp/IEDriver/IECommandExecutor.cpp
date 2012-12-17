@@ -73,6 +73,7 @@
 #include "CommandHandlers/SubmitElementCommandHandler.h"
 #include "CommandHandlers/SwitchToFrameCommandHandler.h"
 #include "CommandHandlers/SwitchToWindowCommandHandler.h"
+#include "CommandHandlers/PageStateHandler.h"
 
 namespace webdriver {
 
@@ -802,6 +803,8 @@ void IECommandExecutor::PopulateCommandHandlers() {
   this->command_handlers_[TouchDoubleClick] = CommandHandlerHandle(new IECommandHandler);
   this->command_handlers_[TouchLongClick] = CommandHandlerHandle(new IECommandHandler);
   this->command_handlers_[TouchFlick] = CommandHandlerHandle(new IECommandHandler);
+
+  this->command_handlers_[PageState] = CommandHandlerHandle(new PageStateHandler);
 }
 
 } // namespace webdriver
