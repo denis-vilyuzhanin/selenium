@@ -33,7 +33,30 @@ class JsonRequestResponse : public IECommandHandler {
                        const LocatorMap& locator_parameters,
                        const ParametersMap& command_parameters,
                        Response* response) {
-    response->SetSuccessResponse("Hello World");
+	Json::Value response_value;
+	response_value["type"] = "response";
+	response_value["status"] = "success";
+
+	Json::Value header;
+	header["title"] = "Test";
+	header["version"] = "1.0";
+	response_value["header"] = header;
+
+	Json::Value item0;
+	item0["name"] = "item0";
+	item0["value"] = "value0";
+
+	Json::Value item1;
+	item1["name"] = "item1";
+	item1["value"] = "value1";
+	
+	Json::Value items(Json::arrayValue);
+	items[(Json::UInt)0] = item0;
+	items[(Json::UInt)1] = item1;
+
+	response_value["items"] = items;
+
+    response->SetSuccessResponse(response_value);
   }
 };
 
