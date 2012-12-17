@@ -41,8 +41,22 @@ class PageStateHandler : public IECommandHandler {
       return;
     }
 
+	CComPtr<IHTMLDocument2> doc;
+	browser_wrapper->GetDocument(&doc);
+
+	CComBSTR pageURL;
+	HRESULT hr = doc->get_URL(&pageURL);
+	if (FAILED(hr)) {
+      LOGHR(WARN, hr) << "Unable to get document URL";
+	  response->SetErrorResponse(status_code, "Unable to get document URL");
+      return;
+    }
+	std::string url_string = CW2A(pageURL, CP_UTF8);
+
+	Json::Value response_value;
+	response_value["url"] = url_string;
     //std::string page_source = browser_wrapper->GetPageSource();
-    response->SetSuccessResponse("OK");
+    response->SetSuccessResponse(response_value);
   }
 };
 
