@@ -56,28 +56,70 @@ class PageStateHandler : public IECommandHandler {
 	Json::Value response_value;
 	response_value["url"] = url_string;
     //std::string page_source = browser_wrapper->GetPageSource();
+	try {
+		response_value["bodyHtml"] = fetchBodyOuterHtml(doc);
+		
+		fetchRootNodeName(doc);
+		Json::Value dom;
+		dom["nodeName"] = fetchRootNodeName(doc);
 
-	CComPtr<IHTMLElement> body;
-	hr = doc->get_body(&body);
-	if (FAILED(hr)) {
-      LOGHR(WARN, hr) << "Unable to get document body";
-	  response->SetErrorResponse(status_code, "Unable to get document body");
-      return;
-    }
-	CComBSTR outerHTML;
-	hr = body->get_outerHTML(&outerHTML);
-	if (FAILED(hr)) {
-      LOGHR(WARN, hr) << "Unable to get document body html";
-	  response->SetErrorResponse(status_code, "Unable to get document body html");
-      return;
-    }
-	std::string bodyHTMLString = CW2A(outerHTML, CP_UTF8);
 
-	response_value["body"] = bodyHTMLString;
+		response_value["dom"] = dom;
+		
+	} catch (const char* m) {
+		response->SetErrorResponse(-1, m);
+		return;
+	}
 
     response->SetSuccessResponse(response_value);
   }
+
+  std::string fetchBodyOuterHtml(CComPtr<IHTMLDocument2>& doc) {
+	CComPtr<IHTMLElement> body;
+	HRESULT hr = doc->get_body(&body);
+	assertSuccess(hr, "Unable to get document body");
+	
+	CComBSTR outerHTML;
+	hr = body->get_outerHTML(&outerHTML);
+	assertSuccess(hr, "Unable to get document body html");
+	std::string bodyHTMLString = CW2A(outerHTML, CP_UTF8);
+	return bodyHTMLString;
+  }
+
+  std::string fetchRootNodeName(CComPtr<IHTMLDocument2>& doc) {
+	  CComPtr<IHTMLDocument3> doc3;
+	  HRESULT hr = doc->QueryInterface(&doc3);
+	  assertSuccess(hr, "Unable to get document3");
+
+	  CComPtr<IHTMLElement> documentElement;
+	  hr = doc3->get_documentElement(&documentElement);
+	  assertSuccess(hr, "Unable to get document element");
+
+	  CComPtr<IHTMLDOMNode> rootNode;
+	  hr = documentElement->QueryInterface(&rootNode);
+	  assertSuccess(hr, "Unable to get root node");
+	  
+	  CComBSTR rootNodeName;
+	  hr = rootNode->get_nodeName(&rootNodeName);
+	  assertSuccess(hr, "Unable to get root node name");
+
+	  std::string rootNodeNameString = CW2A(rootNodeName, CP_UTF8);
+	  return rootNodeNameString;
+	  /*CComPtr<IHTMLHtmlElement> htmlElement;
+	  hr = documentElement->QueryInterface(&htmlElement);
+	  assertSuccess(hr, "Unable to get html element");*/
+
+
+  }
+
+  void assertSuccess(HRESULT hr, const char* message) {
+	if (FAILED(hr)) {
+		LOGHR(WARN, hr) << message;
+		throw message;
+    }
+  }
 };
+
 
 } // namespace webdriver
 
