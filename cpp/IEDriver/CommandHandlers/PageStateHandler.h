@@ -56,6 +56,25 @@ class PageStateHandler : public IECommandHandler {
 	Json::Value response_value;
 	response_value["url"] = url_string;
     //std::string page_source = browser_wrapper->GetPageSource();
+
+	CComPtr<IHTMLElement> body;
+	hr = doc->get_body(&body);
+	if (FAILED(hr)) {
+      LOGHR(WARN, hr) << "Unable to get document body";
+	  response->SetErrorResponse(status_code, "Unable to get document body");
+      return;
+    }
+	CComBSTR outerHTML;
+	hr = body->get_outerHTML(&outerHTML);
+	if (FAILED(hr)) {
+      LOGHR(WARN, hr) << "Unable to get document body html";
+	  response->SetErrorResponse(status_code, "Unable to get document body html");
+      return;
+    }
+	std::string bodyHTMLString = CW2A(outerHTML, CP_UTF8);
+
+	response_value["body"] = bodyHTMLString;
+
     response->SetSuccessResponse(response_value);
   }
 };
