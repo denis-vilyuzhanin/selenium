@@ -247,6 +247,7 @@
     <ClInclude Include="Alert.h" />
     <ClInclude Include="Browser.h" />
     <ClInclude Include="BrowserFactory.h" />
+    <ClInclude Include="CommandHandlers\GetLayoutHandler.h" />
     <ClInclude Include="CommandHandlers\GetWindowPositionCommandHandler.h" />
     <ClInclude Include="CommandHandlers\GetWindowSizeCommandHandler.h" />
     <ClInclude Include="CommandHandlers\MaximizeWindowCommandHandler.h" />
